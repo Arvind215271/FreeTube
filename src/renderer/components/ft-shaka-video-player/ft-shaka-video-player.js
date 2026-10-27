@@ -2077,8 +2077,9 @@ export default defineComponent({
      * @param {boolean} snapToClosestInterval
      */
     function changePlayBackRate(delta, snapToClosestInterval = false) {
-      let newPlaybackRateString = (player.getPlaybackRate() + delta).toFixed(2)
-      let newPlaybackRate = parseFloat(newPlaybackRateString)
+      let newPlaybackRate = player.getPlaybackRate() + delta
+      let newPlaybackRateString = Number(newPlaybackRate.toFixed(2)).toString()
+      newPlaybackRate = parseFloat(newPlaybackRateString)
 
       if (snapToClosestInterval) {
         const currentPlaybackRate = player.getPlaybackRate()
@@ -2098,7 +2099,7 @@ export default defineComponent({
         const next = parseFloat((Math.round(raw / step) * step).toPrecision(10))
         const clamped = Math.max(min, Math.min(max, next))
         newPlaybackRate = clamped
-        newPlaybackRateString = clamped.toFixed(2)
+        newPlaybackRateString = Number(clamped.toFixed(2)).toString()
       }
 
       // The following error is thrown if you go below 0.07:
